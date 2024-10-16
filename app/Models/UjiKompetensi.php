@@ -9,7 +9,7 @@ class UjiKompetensi extends Model
 {
     protected $fillable = ['bab_id', 'soal', 'tipe', 'data'];
 
-    public function UjiKompetensi() {
+    public function bab() {
         return $this->belongsTo(Bab::class);
     }
 }

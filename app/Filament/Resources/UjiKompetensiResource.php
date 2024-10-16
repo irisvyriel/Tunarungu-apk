@@ -20,19 +20,31 @@ class UjiKompetensiResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $recordTitleAttribute = 'soal';
+
+    protected static ?string $navigationLabel = 'Uji Kompetensi';
+
+    protected static ?string $slug = 'uji-kompetensi';
+
+    protected static ?int $navigationSort = 1;
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\Select::make('bab_id')
-                        ->label('Bab')
-                        ->options(Bab::all()->pluck('nama', 'id'))
-                        ->required()
-                        ->searchable(),
+                    ->label('Bab')
+                    ->options(Bab::all()->pluck('nama', 'id'))
+                    ->required()
+                    ->searchable(),
                 Forms\Components\TextInput::make('soal')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('tipe')
+                Forms\Components\Select::make('tipe')
+                    ->options([
+                        'Pilihan Ganda' => 'Pilihan Ganda', 
+                        'Essay' => 'Essay' 
+                    ])
                     ->required(),
                 // Forms\Components\TextInput::make('data'),
             ]);
@@ -42,7 +54,7 @@ class UjiKompetensiResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('bab_id')
+                Tables\Columns\TextColumn::make('bab.nama')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('soal')

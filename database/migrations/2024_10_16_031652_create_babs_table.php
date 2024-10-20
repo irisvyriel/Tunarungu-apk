@@ -13,9 +13,14 @@ return new class extends Migration
     {
         Schema::create('babs', function (Blueprint $table) {
             $table->id();
+            $table->string('uuid')->unique();
+            $table->foreignId('kelas_id')->constrained();
             $table->foreignId('mata_pelajaran_id')->constrained();
             $table->string('kode');
             $table->string('nama');
+            $table->string('gambar')->nullable();
+            $table->string('audio')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

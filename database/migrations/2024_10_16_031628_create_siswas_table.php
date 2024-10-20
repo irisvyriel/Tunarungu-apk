@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('siswas', function (Blueprint $table) {
             $table->id();
+            $table->string('uuid')->unique();
             $table->foreignId('kelas_id')->constrained();
             $table->string('nis')->unique();
             $table->string('nama');
@@ -20,6 +21,7 @@ return new class extends Migration
             $table->string('tempat_lahir');
             $table->date('tanggal_lahir');
             $table->text('alamat');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

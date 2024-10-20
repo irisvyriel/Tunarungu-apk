@@ -13,10 +13,12 @@ return new class extends Migration
     {
         Schema::create('uji_kompetensis', function (Blueprint $table) {
             $table->id();
+            $table->string('uuid')->unique();
             $table->foreignId('bab_id')->constrained();
-            $table->string('soal');
+            $table->text('soal');
             $table->enum('tipe', ['Pilihan Ganda', 'Essay']);
-            $table->json('data')->nullable();
+            $table->string('audio')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -7,17 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Ramsey\Uuid\Uuid;
 
-class MataPelajaran extends Model
+class Materi extends Model
 {
     use SoftDeletes;
 
     protected $guarded = ['id'];
-
-    public function babs()
-    {
-        return $this->hasMany(Bab::class);
-    }
-
     public static function boot()
     {
         parent::boot();
@@ -30,5 +24,10 @@ class MataPelajaran extends Model
     public function getRouteKeyName()
     {
         return 'uuid';
+    }
+
+    public function bab()
+    {
+        return $this->belongsTo(Bab::class);
     }
 }

@@ -7,6 +7,7 @@
     "require": {
         "php": "^8.2",
         "filament/filament": "^3.2",
+        "hugomyb/filament-media-action": "v3.1.0.9",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9"
     },

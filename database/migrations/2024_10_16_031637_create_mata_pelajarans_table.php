@@ -13,7 +13,11 @@ return new class extends Migration
     {
         Schema::create('mata_pelajarans', function (Blueprint $table) {
             $table->id();
-            $table->string('nama', 255);
+            $table->string('uuid')->unique();
+            $table->string('nama');
+            $table->string('gambar')->nullable();
+            $table->string('audio')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

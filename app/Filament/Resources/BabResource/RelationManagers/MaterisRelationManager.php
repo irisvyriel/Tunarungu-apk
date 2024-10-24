@@ -22,13 +22,19 @@ class MaterisRelationManager extends RelationManager
                 Forms\Components\RichEditor::make('materi')
                     ->required()
                     ->columnSpanFull(),
+                Forms\Components\FileUpload::make('audio')
+                    ->visibility('public')
+                    ->required(fn($record) => $record === null)
+                    ->enableOpen()
+                    ->columnSpanFull()
+                    ->enableDownload(),
             ]);
     }
 
     public function table(Table $table): Table
     {
         return $table
-            ->recordTitleAttribute('materi')
+            ->recordTitleAttribute('uuid')
             ->columns([
                 Tables\Columns\TextColumn::make('materi'),
             ])

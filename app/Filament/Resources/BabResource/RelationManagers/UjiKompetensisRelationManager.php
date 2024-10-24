@@ -22,6 +22,11 @@ class UjiKompetensisRelationManager extends RelationManager
                 Forms\Components\RichEditor::make('soal')
                     ->required()
                     ->columnSpanFull(),
+                Forms\Components\FileUpload::make('audio')
+                    ->visibility('public')
+                    ->required(fn($record) => $record === null)
+                    ->enableOpen()
+                    ->enableDownload(),
                 Forms\Components\Select::make('tipe')
                     ->required()
                     ->options([
@@ -34,7 +39,7 @@ class UjiKompetensisRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
-            ->recordTitleAttribute('materi')
+            ->recordTitleAttribute('uuid')
             ->columns([
                 Tables\Columns\TextColumn::make('soal'),
                 Tables\Columns\TextColumn::make('tipe'),

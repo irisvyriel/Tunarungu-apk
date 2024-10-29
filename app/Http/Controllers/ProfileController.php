@@ -11,7 +11,6 @@ class ProfileController extends Controller
 
     public function index()
     {
-        $siswa = auth('siswas')->user();
-        return view('pages.profile.index', compact('siswa'));
+        return view('pages.profile.index');
     }
 }

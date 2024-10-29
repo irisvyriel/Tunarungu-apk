@@ -27,7 +27,7 @@ class EditBab extends EditRecord
     protected function handleRecordUpdate(Model $record, array $data): Model
     {
         $textToSpeech = new TextToSpeechService();
-        $convertTextToSpeech = $textToSpeech->generateSpeech($data['kode'] . "," . $data['nama']);
+        $convertTextToSpeech = $textToSpeech->generateSpeech("Halaman " . $data['kode'] . "," . $data['nama']);
         $data['audio'] = $convertTextToSpeech['file_name'] ?? null;
 
         $record->update($data);

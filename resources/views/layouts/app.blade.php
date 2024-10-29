@@ -7,18 +7,35 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@yield('title') - {{ config('app.name') }}</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    @vite('resources/css/app.css')
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    @laravelPWA
     @stack('css')
 </head>
 
-<body class="antialiased bg-slate-100">
-    <main class="bg-white max-w-md flex justify-center min-h-screen mx-auto relative">
+<body class="bg-secondary">
+    <main class="container-fluid p-0 max-w-sm bg-white min-vh-100 mx-auto">
         @yield('main')
-        @include('components.navigantion')
+        @include('components.navigation')
+        <div id="speechStatus" class="fixed-bottom mb-5 text-center p-2">
+            <span class="badge bg-secondary">Microphone: Initializing...</span>
+        </div>
     </main>
-
-    @vite('resources/js/app.js')
+    <script src="{{ asset('js/jquery-3.7.1.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('js/custom.js') }}"></script>
+    <script src="{{ asset('js/speechRecognition.js') }}"></script>
     @stack('js')
+    <script>
+        $(document).ready(function() {
+            $('#restartSpeech').click(function() {
+                restartSpeechRecognition(@json($commands));
+            });
+        });
+    </script>
 </body>
 
 </html>

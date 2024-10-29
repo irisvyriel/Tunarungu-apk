@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('tempat_lahir');
             $table->date('tanggal_lahir');
+            $table->enum('jenis_kelamin', ['Laki-Laki', 'Perempuan']);
             $table->text('alamat');
             $table->softDeletes();
             $table->timestamps();

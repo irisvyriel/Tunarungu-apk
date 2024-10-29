@@ -19,8 +19,6 @@ class SiswaResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'nama';
 
-    protected static ?string $navigationGroup = 'Data Master';
-
     protected static ?string $navigationLabel = 'Siswa';
 
     protected static ?string $slug = 'siswa';
@@ -59,6 +57,13 @@ class SiswaResource extends Resource
                                     return $state ? bcrypt($state) : $record->password;
                                 }
                             }),
+                        Forms\Components\Select::make('jenis_kelamin')
+                            ->label('Jenis Kelamin')
+                            ->options([
+                                'Laki-Laki' => 'Laki-Laki',
+                                'Perempuan' => 'Perempuan',
+                            ])
+                            ->required(),
                         Forms\Components\TextInput::make('tempat_lahir')
                             ->label('Tempat Lahir')
                             ->required()
@@ -85,6 +90,9 @@ class SiswaResource extends Resource
                 Tables\Columns\TextColumn::make('kelas.nama')
                     ->label('Kelas')
                     ->sortable(),
+                Tables\Columns\TextColumn::make('jenis_kelamin')
+                    ->label('Jenis Kelamin')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('tempat_lahir')
                     ->label('Tempat Lahir')
                     ->searchable(),

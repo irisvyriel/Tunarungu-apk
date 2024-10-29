@@ -17,17 +17,15 @@ class MataPelajaranResource extends Resource
 {
     protected static ?string $model = MataPelajaran::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-book-open';
+        protected static ?string $navigationIcon = 'heroicon-o-book-open';
 
-    protected static ?string $recordTitleAttribute = 'nama';
+        protected static ?string $recordTitleAttribute = 'nama';
 
-    protected static ?string $navigationLabel = 'Mata Pelajaran';
+        protected static ?string $navigationLabel = 'Mata Pelajaran';
 
-    protected static ?string $navigationGroup = 'Data Master';
+        protected static ?string $slug = 'mata-pelajaran';
 
-    protected static ?string $slug = 'mata-pelajaran';
-
-    protected static ?int $navigationSort = 4;
+        protected static ?int $navigationSort = 4;
 
     public static function form(Form $form): Form
     {

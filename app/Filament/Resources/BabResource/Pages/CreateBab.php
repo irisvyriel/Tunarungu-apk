@@ -20,7 +20,7 @@ class CreateBab extends CreateRecord
     protected function handleRecordCreation(array $data): Model
     {
         $textToSpeech = new TextToSpeechService();
-        $convertTextToSpeech = $textToSpeech->generateSpeech($data['kode'] . "," . $data['nama']);
+        $convertTextToSpeech = $textToSpeech->generateSpeech("Halaman " . $data['kode'] . "," . $data['nama']);
 
         $bab = Bab::create([
             'mata_pelajaran_id' => $data['mata_pelajaran_id'],

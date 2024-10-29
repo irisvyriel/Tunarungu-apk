@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Bab;
 use App\Models\MataPelajaran;
 use App\Models\Materi;
-use App\Models\Siswa;
+use App\Models\Pengaturan;
 use App\Models\UjiKompetensi;
 use App\Traits\ApiResponder;
 
@@ -16,30 +16,33 @@ class HomeController extends Controller
 
     public function index()
     {
-        $siswa = Siswa::first();
+        $siswa = auth('siswas')->user();
         $mataPelajaran = MataPelajaran::all();
-        return view('pages.home.index', compact('mataPelajaran', 'siswa'));
+        $pengaturan = Pengaturan::where('kode', 'home')->first();
+        return view('pages.home.index', compact('mataPelajaran', 'siswa', 'pengaturan'));
     }
 
     public function show($uuid)
     {
-        $siswa = Siswa::first();
+        $siswa = auth('siswas')->user();
         $mataPelajaran = MataPelajaran::whereUuid($uuid)->firstOrFail();
         $bab = Bab::where([
             'mata_pelajaran_id' => $mataPelajaran->id,
             'kelas_id' => $siswa->kelas_id,
         ])->get();
+        $pengaturan = Pengaturan::where('kode', 'halaman')->first();
 
-        return view('pages.home.show', compact('mataPelajaran', 'siswa', 'bab'));
+        return view('pages.home.show', compact('mataPelajaran', 'siswa', 'bab', 'pengaturan'));
     }
 
-    public function getMateriByBab($uuid)
+    public function getBab($uuid)
     {
-        $siswa = Siswa::first();
+        $siswa = auth('siswas')->user();
         $bab = Bab::whereUuid($uuid)->firstOrFail();
         $materi = Materi::where('bab_id', $bab->id)->get();
         $ujiKompetensi = UjiKompetensi::where('bab_id', $bab->id)->get();
+        $pengaturan = Pengaturan::where('kode', 'halaman')->first();
 
-        return view('pages.home.materi', compact('materi', 'ujiKompetensi', 'siswa', 'bab'));
+        return view('pages.home.bab', compact('materi', 'ujiKompetensi', 'siswa', 'bab', 'pengaturan'));
     }
 }

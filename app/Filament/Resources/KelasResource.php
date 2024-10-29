@@ -18,8 +18,6 @@ class KelasResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'nama';
 
-    protected static ?string $navigationGroup = 'Data Master';
-
     protected static ?string $navigationLabel = 'Kelas';
 
     protected static ?string $slug = 'kelas';

@@ -19,6 +19,8 @@ class MaterisRelationManager extends RelationManager
     {
         return $form
             ->schema([
+                Forms\Components\TextInput::make('judul')
+                    ->required(),
                 Forms\Components\RichEditor::make('materi')
                     ->required()
                     ->columnSpanFull(),
@@ -34,9 +36,9 @@ class MaterisRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
-            ->recordTitleAttribute('uuid')
+            ->recordTitleAttribute('judul')
             ->columns([
-                Tables\Columns\TextColumn::make('materi'),
+                Tables\Columns\TextColumn::make('judul'),
             ])
             ->headerActions([
                 Tables\Actions\CreateAction::make(),

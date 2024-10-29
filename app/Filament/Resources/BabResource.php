@@ -24,8 +24,6 @@ class BabResource extends Resource
 
     protected static ?string $navigationLabel = 'Bab';
 
-    protected static ?string $navigationGroup = 'Data Master';
-
     protected static ?string $slug = 'bab';
 
     protected static ?int $navigationSort = 5;

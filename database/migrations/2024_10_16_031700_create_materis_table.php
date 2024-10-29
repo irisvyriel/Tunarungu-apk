@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('uuid')->unique();
             $table->foreignId('bab_id')->constrained();
+            $table->string('judul');
             $table->longText('materi');
             $table->string('audio')->nullable();
             $table->softDeletes();

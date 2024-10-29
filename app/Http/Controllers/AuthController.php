@@ -15,6 +15,10 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
+        if (auth('siswas')->check()) {
+            return redirect()->route('home');
+        }
+
         if ($request->isMethod('post')) {
             $validator = Validator::make($request->all(), [
                 'nis' => 'required|exists:siswas,nis',
@@ -22,7 +26,7 @@ class AuthController extends Controller
             ]);
 
             if ($validator->fails()) {
-                return $this->errorResponse(null, $validator->errors()->first());
+                return $this->errorResponse($validator->errors(), 'Validasi Gagal');
             }
 
             $siswa = Siswa::where('nis', $request->nis)->first();
@@ -31,8 +35,8 @@ class AuthController extends Controller
                 return $this->errorResponse(null, 'Password tidak sesuai');
             }
 
-            $session = auth('siswas')->login($siswa);
-            return $this->successResponse($siswa, 'Login Berhasil');
+            $login = auth('siswas')->login($siswa);
+            return $this->successResponse($login, 'Login Berhasil');
         }
 
         return view('pages.auth.login');

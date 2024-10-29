@@ -47,6 +47,7 @@ class DatabaseSeeder extends Seeder
                     'tempat_lahir' => 'Tasikmalaya',
                     'tanggal_lahir' => '2010-01-01',
                     'alamat' => 'Jl. Mawar No. 123',
+                    'jenis_kelamin' => 'Perempuan',
                 ],
                 [
                     'nis' => '0987654321',
@@ -54,6 +55,7 @@ class DatabaseSeeder extends Seeder
                     'tempat_lahir' => 'Bandung',
                     'tanggal_lahir' => '2010-02-01',
                     'alamat' => 'Jl. Melati No. 456',
+                    'jenis_kelamin' => 'Laki-Laki',
                 ],
                 [
                     'nis' => '1122334455',
@@ -61,6 +63,7 @@ class DatabaseSeeder extends Seeder
                     'tempat_lahir' => 'Jakarta',
                     'tanggal_lahir' => '2010-03-01',
                     'alamat' => 'Jl. Anggrek No. 789',
+                    'jenis_kelamin' => 'Perempuan',
                 ],
             ];
 

@@ -3,88 +3,41 @@
 @section('title', 'Beranda')
 
 @push('css')
-    <style>
-        .card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease; 
-            cursor: pointer; 
-        }
-
-        .card:hover {
-            transform: scale(1.05); 
-            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1); 
-        }
-    </style>
 @endpush
 
 @section('main')
-    <div class="w-full min-h-screen overflow-y-auto">
-        <div class="px-8 py-6">
-            <h4 class="text-xl font-semibold mb-3">
+    <audio id="audio-player"></audio>
+    <div class="min-vh-100 overflow-auto">
+        <div class="px-4 py-4">
+            <h5 class="fw-bold mb-3">
                 @yield('title')
-            </h4>
-            <div class="bg-gradient-to-r from-blue-500 to-blue-400 rounded-3xl w-full h-32 mb-4 p-4">
-                <p class="text-white font-semibold text-sm">
-                    Aplikasi Media Pembelajaran
-                    Berbasis Artificial Intelligence Untuk Siswa Berkebutuhan Khusus Tunanetra
-                </p>
+            </h5>
+            <div class="rounded-4 gradient-bg text-white w-100 mb-4 p-4 d-flex align-items-center">
+                <div class="row">
+                    <div class="col-8">
+                        <div class="small text-center">
+                            Aplikasi Media Pembelajaran
+                            Berbasis Artificial Intelligence Untuk Siswa Berkebutuhan Khusus Tunanetra
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <img src="{{ asset('images/logo.png') }}" class="img-fluid" alt="">
+                    </div>
+                </div>
             </div>
-            <h5 class="text-md text-center font-semibold mb-3">Daftar Mata Pelajaran</h5>
-            
-            <div class="grid grid-cols-2 gap-4 pb-20">
-                <!-- Loop for mataPelajaran items -->
+            <h6 class="text-center font-weight-bold mb-3">Daftar Mata Pelajaran</h6>
+            <div class="row row-cols-2 g-3 pb-5">
                 @foreach ($mataPelajaran as $m)
-                    <a class="card bg-base-100 shadow-md" href="{{ route('show', $m->uuid) }}">
-                        <figure>
-                            <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp" alt="Mata Pelajaran" />
-                        </figure>
-                        <div class="card-body p-3">
-                            <h6 class="text-sm text-center">{{ $m->nama }}</h6>
-                        </div>
-                    </a>
-                @endforeach
-
-                @foreach ($mataPelajaran as $m)
-                    <a class="card bg-base-100 shadow-md" href="{{ route('show', $m->uuid) }}">
-                        <figure>
-                            <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp" alt="Mata Pelajaran" />
-                        </figure>
-                        <div class="card-body p-3">
-                            <h6 class="text-sm text-center">{{ $m->nama }}</h6>
-                        </div>
-                    </a>
-                @endforeach
-
-                @foreach ($mataPelajaran as $m)
-                    <a class="card bg-base-100 shadow-md" href="{{ route('show', $m->uuid) }}">
-                        <figure>
-                            <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp" alt="Mata Pelajaran" />
-                        </figure>
-                        <div class="card-body p-3">
-                            <h6 class="text-sm text-center">{{ $m->nama }}</h6>
-                        </div>
-                    </a>
-                @endforeach
-
-                @foreach ($mataPelajaran as $m)
-                    <a class="card bg-base-100 shadow-md" href="{{ route('show', $m->uuid) }}">
-                        <figure>
-                            <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp" alt="Mata Pelajaran" />
-                        </figure>
-                        <div class="card-body p-3">
-                            <h6 class="text-sm text-center">{{ $m->nama }}</h6>
-                        </div>
-                    </a>
-                @endforeach
-
-                @foreach ($mataPelajaran as $m)
-                    <a class="card bg-base-100 shadow-md" href="{{ route('show', $m->uuid) }}">
-                        <figure>
-                            <img src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp" alt="Mata Pelajaran" />
-                        </figure>
-                        <div class="card-body p-3">
-                            <h6 class="text-sm text-center">{{ $m->nama }}</h6>
-                        </div>
-                    </a>
+                    <div class="col">
+                        <a class="card bg-light shadow-sm rounded-lg transition-transform transform-scale-on-hover text-decoration-none"
+                            href="{{ route('show', $m->uuid) }}">
+                            <img src="{{ asset('storage/' . $m->gambar) }}" height="120" style="object-fit: cover"
+                                class="card-img-top rounded-top" alt="Mata Pelajaran">
+                            <div class="card-body p-2">
+                                <small class="card-title text-center">{{ $m->nama }}</small>
+                            </div>
+                        </a>
+                    </div>
                 @endforeach
             </div>
         </div>
@@ -92,4 +45,53 @@
 @endsection
 
 @push('js')
+    <script>
+        $(document).ready(function() {
+            const audioPlayer = $('#audio-player')[0];
+            const pengaturanAudio = "{{ asset('storage/' . $pengaturan->audio) }}";
+            const mataPelajaranAudioSources = @json($mataPelajaran->pluck('audio')->map(fn($audio) => asset('storage/' . $audio))->toArray());
+            let currentMataPelajaranIndex = 0;
+            let isPengaturanAudioPlayed = false;
+            let isSpeechRecognitionPaused = false;
+            let isAudioComplete = false;
+
+            function pauseSpeechRecognition() {
+                if (!isSpeechRecognitionPaused) {
+                    stopSpeechRecognition();
+                    isSpeechRecognitionPaused = true;
+                }
+            }
+
+            function resumeSpeechRecognition() {
+                if (isSpeechRecognitionPaused) {
+                    initializeSpeechRecognition(@json($commands));
+                    isSpeechRecognitionPaused = false;
+                }
+            }
+
+            function playNextAudio() {
+                if (isAudioComplete) return;
+
+                pauseSpeechRecognition();
+
+                if (!isPengaturanAudioPlayed) {
+                    audioPlayer.src = pengaturanAudio;
+                    isPengaturanAudioPlayed = true;
+                } else if (currentMataPelajaranIndex < mataPelajaranAudioSources.length) {
+                    audioPlayer.src = mataPelajaranAudioSources[currentMataPelajaranIndex];
+                    currentMataPelajaranIndex++;
+                } else {
+                    isAudioComplete = true;
+                    resumeSpeechRecognition();
+                    $(audioPlayer).off('ended');
+                    return;
+                }
+                audioPlayer.play();
+            }
+
+            playNextAudio();
+
+            $(audioPlayer).on('ended', playNextAudio);
+        });
+    </script>
 @endpush

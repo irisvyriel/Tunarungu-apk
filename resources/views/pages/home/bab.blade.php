@@ -96,8 +96,10 @@
             const audioPlayer = $('#audio-player')[0];
             const pengaturanAudio = "{{ asset('storage/' . $pengaturan->audio) }}";
             const babAudio = "{{ asset('storage/' . $bab->audio) }}";
+            const aturanAudio = "{{ asset('storage/' . $aturan->audio) }}";
             let isPengaturanAudioPlayed = false;
             let isbabAudioPlayed = false;
+            let isAturanAudio = false;
             let isSpeechRecognitionPaused = false;
             let isAudioComplete = false;
 
@@ -126,6 +128,9 @@
                 } else if (!isbabAudioPlayed) {
                     audioPlayer.src = babAudio;
                     isbabAudioPlayed = true;
+                } else if (!isAturanAudio) {
+                    audioPlayer.src = aturanAudio
+                    isAturanAudio = true;
                 } else {
                     isAudioComplete = true;
                     resumeSpeechRecognition();

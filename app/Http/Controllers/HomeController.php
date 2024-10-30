@@ -42,7 +42,8 @@ class HomeController extends Controller
         $materi = Materi::where('bab_id', $bab->id)->get();
         $ujiKompetensi = UjiKompetensi::where('bab_id', $bab->id)->get();
         $pengaturan = Pengaturan::where('kode', 'halaman')->first();
+        $aturan = Pengaturan::where('kode', 'aturan')->first();
 
-        return view('pages.home.bab', compact('materi', 'ujiKompetensi', 'siswa', 'bab', 'pengaturan'));
+        return view('pages.home.bab', compact('materi', 'ujiKompetensi', 'siswa', 'bab', 'pengaturan', 'aturan'));
     }
 }

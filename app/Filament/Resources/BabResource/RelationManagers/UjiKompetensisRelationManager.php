@@ -24,6 +24,7 @@ class UjiKompetensisRelationManager extends RelationManager
                     ->columnSpanFull(),
                 Forms\Components\FileUpload::make('audio')
                     ->visibility('public')
+                    ->maxSize(10240 * 3)
                     ->required(fn($record) => $record === null)
                     ->enableOpen()
                     ->enableDownload(),

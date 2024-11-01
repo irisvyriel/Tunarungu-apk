@@ -28,6 +28,7 @@ class MaterisRelationManager extends RelationManager
                     ->visibility('public')
                     ->required(fn($record) => $record === null)
                     ->enableOpen()
+                    ->maxSize(10240 * 3)
                     ->columnSpanFull()
                     ->enableDownload(),
             ]);

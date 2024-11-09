@@ -46,4 +46,9 @@ class HomeController extends Controller
 
         return view('pages.home.bab', compact('materi', 'ujiKompetensi', 'siswa', 'bab', 'pengaturan', 'aturan'));
     }
+
+    public function helper()
+    {
+        return view('pages.home.helper');
+    }
 }

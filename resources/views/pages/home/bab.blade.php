@@ -103,6 +103,7 @@
             let isSpeechRecognitionPaused = false;
             let isAudioComplete = false;
 
+
             function pauseSpeechRecognition() {
                 if (!isSpeechRecognitionPaused) {
                     stopSpeechRecognition();
@@ -123,13 +124,13 @@
                 pauseSpeechRecognition();
 
                 if (!isPengaturanAudioPlayed) {
-                    audioPlayer.src = pengaturanAudio
+                    audioPlayer.src = pengaturanAudio;
                     isPengaturanAudioPlayed = true;
                 } else if (!isbabAudioPlayed) {
                     audioPlayer.src = babAudio;
                     isbabAudioPlayed = true;
                 } else if (!isAturanAudio) {
-                    audioPlayer.src = aturanAudio
+                    audioPlayer.src = aturanAudio;
                     isAturanAudio = true;
                 } else {
                     isAudioComplete = true;
@@ -141,7 +142,6 @@
             }
 
             playNextAudio();
-
             $(audioPlayer).on('ended', playNextAudio);
         });
 
@@ -178,5 +178,22 @@
                 );
             }
         }
+
+        function handleCommand(speech) {
+            if (speech.includes("play") || speech.includes("jalankan")) {
+                audioPlayer.play();
+                updateStatus("Memutar audio", "bg-success");
+            } else if (speech.includes("pause") || speech.includes("jeda") || speech.includes("stop")) {
+                audioPlayer.pause();
+                updateStatus("Audio dijeda", "bg-warning");
+            } else if (speech.includes("next") || speech.includes("selanjutnya")) {
+                playNextAudio();
+                updateStatus("Memutar audio berikutnya", "bg-info");
+            }
+        }
+
+        $(document).on('speechCommand', function(event, command) {
+            handleCommand(command);
+        });
     </script>
 @endpush

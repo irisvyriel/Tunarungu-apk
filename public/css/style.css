@@ -13935,3 +13935,10 @@ fieldset:disabled .btn {
     background-color: #007bff;
     border-radius: 0.25rem;
 }
+
+#helper-button {
+    position: fixed;
+    bottom: 60px;
+    right: 20px;
+    z-index: 10000;
+}

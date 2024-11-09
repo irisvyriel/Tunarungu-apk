@@ -44,9 +44,30 @@ class BabResource extends Resource
                             ->options(MataPelajaran::all()->pluck('nama', 'id'))
                             ->required()
                             ->searchable(),
-                        Forms\Components\TextInput::make('kode')
+                        Forms\Components\Select::make('kode')
                             ->required()
-                            ->maxLength(255),
+                            ->options([
+                                'Bab 1' => 'Bab 1',
+                                'Bab 2' => 'Bab 2',
+                                'Bab 3' => 'Bab 3',
+                                'Bab 4' => 'Bab 4',
+                                'Bab 5' => 'Bab 5',
+                                'Bab 6' => 'Bab 6',
+                                'Bab 7' => 'Bab 7',
+                                'Bab 8' => 'Bab 8',
+                                'Bab 9' => 'Bab 9',
+                                'Bab 10' => 'Bab 10',
+                                'Bab 11' => 'Bab 11',
+                                'Bab 12' => 'Bab 12',
+                                'Bab 13' => 'Bab 13',
+                                'Bab 14' => 'Bab 14',
+                                'Bab 15' => 'Bab 15',
+                                'Bab 16' => 'Bab 16',
+                                'Bab 17' => 'Bab 17',
+                                'Bab 18' => 'Bab 18',
+                                'Bab 19' => 'Bab 19',
+                                'Bab 20' => 'Bab 20',
+                            ]),
                         Forms\Components\TextInput::make('nama')
                             ->required()
                             ->maxLength(255),

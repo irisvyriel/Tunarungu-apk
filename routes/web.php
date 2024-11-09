@@ -16,6 +16,7 @@ Route::middleware('auth:siswas')->group(function () {
     Route::get('/home/{uuid}', [HomeController::class, 'show'])->name('show');
     Route::get('/home/{uuid}/bab', [HomeController::class, 'getBab'])->name('bab');
     Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+    Route::get('/helper', [HomeController::class, 'helper'])->name('helper');
 });
 
 Route::get('/storage-link', function () {

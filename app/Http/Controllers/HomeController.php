@@ -49,6 +49,7 @@ class HomeController extends Controller
 
     public function helper()
     {
-        return view('pages.home.helper');
+        $help = Pengaturan::where('kode', 'help')->first();
+        return view('pages.home.helper', compact('help'));
     }
 }

@@ -6,6 +6,7 @@
 @endpush
 
 @section('main')
+    <audio id="audio-player"></audio>
     <nav class="navbar navbar-light bg-light sticky-top mb-3">
         <div class="container d-flex align-items-center w-100 px-4">
             <a href="{{ route('home') }}" class="text-dark me-3">
@@ -25,5 +26,51 @@
 @endsection
 
 @push('js')
-    <script></script>
+    @if (isset($help))
+        <script>
+            $(document).ready(function() {
+                const audioPlayer = $('#audio-player')[0];
+                const pengaturanAudio = "{{ asset('storage/' . $help->audio) }}";
+                let currentMataPelajaranIndex = 0;
+                let isPengaturanAudioPlayed = false;
+                let isSpeechRecognitionPaused = false;
+                let isAudioComplete = false;
+
+                function pauseSpeechRecognition() {
+                    if (!isSpeechRecognitionPaused) {
+                        stopSpeechRecognition();
+                        isSpeechRecognitionPaused = true;
+                    }
+                }
+
+                function resumeSpeechRecognition() {
+                    if (isSpeechRecognitionPaused) {
+                        initializeSpeechRecognition(@json($commands));
+                        isSpeechRecognitionPaused = false;
+                    }
+                }
+
+                function playNextAudio() {
+                    if (isAudioComplete) return;
+
+                    pauseSpeechRecognition();
+
+                    if (!isPengaturanAudioPlayed) {
+                        audioPlayer.src = pengaturanAudio;
+                        isPengaturanAudioPlayed = true;
+                    } else {
+                        isAudioComplete = true;
+                        resumeSpeechRecognition();
+                        $(audioPlayer).off('ended');
+                        return;
+                    }
+                    audioPlayer.play();
+                }
+
+                playNextAudio();
+
+                $(audioPlayer).on('ended', playNextAudio);
+            });
+        </script>
+    @endif
 @endpush

@@ -12,6 +12,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Hugomyb\FilamentMediaAction\Tables\Actions\MediaAction;
+use Illuminate\Database\Eloquent\Builder;
 
 class PengaturanResource extends Resource
 {
@@ -87,9 +88,8 @@ class PengaturanResource extends Resource
                 Tables\Actions\RestoreAction::make(),
                 Tables\Actions\ForceDeleteAction::make(),
             ])
-            ->query(function ($query) {
-                return $query
-                    ->whereNot('kode', 'help');
+            ->modifyQueryUsing(function (Builder $query) {
+                return $query->where('kode', '!=', 'help');
             })
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

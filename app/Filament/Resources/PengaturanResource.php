@@ -87,6 +87,10 @@ class PengaturanResource extends Resource
                 Tables\Actions\RestoreAction::make(),
                 Tables\Actions\ForceDeleteAction::make(),
             ])
+            ->query(function ($query) {
+                return $query
+                    ->whereNot('kode', 'help');
+            })
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
@@ -96,6 +100,7 @@ class PengaturanResource extends Resource
             ])
             ->paginated([25, 50, 100, 'all']);
     }
+
     public static function getRelations(): array
     {
         return [

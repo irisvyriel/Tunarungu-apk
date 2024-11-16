@@ -16,7 +16,6 @@
             </div>
         </div>
     </nav>
-
     <div class="min-vh-100 overflow-auto">
         <div class="px-4 py-4">
             <iframe src="https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf" class="w-100 min-vh-100"
